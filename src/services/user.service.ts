@@ -7,6 +7,11 @@ export const create = async (createUserData: userRepository.CreateUserData) => {
   return user;
 };
 
+export const getUserById = async (id: number) => {
+  const user = await userRepository.getUserById(id);
+  return user;
+};
+
 export const verifyIfUserExists = async (email: string) => {
   const user = await userRepository.getUserByEmail(email);
   if (user) {
