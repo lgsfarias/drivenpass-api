@@ -1,24 +1,24 @@
 import { Router } from 'express';
 import {
-  createSecureNote,
-  getAllUsersSecureNotes,
-  getSecureNoteById,
-  deleteSecureNote,
-} from '../controllers/secureNote.controller.js';
+  createCard,
+  getAllUsersCards,
+  getCardById,
+  deleteCard,
+} from '../controllers/card.controller.js';
 import validateSchemaMiddleware from '../middlewares/validateSchemaMiddleware.js';
 import verifiTokenMiddleware from '../middlewares/verifyTokenMiddleware.js';
 import * as schemas from '../schemas/index.js';
 
-const secureNoteRouter = Router();
+const cardRouter = Router();
 
-secureNoteRouter.post(
+cardRouter.post(
   '/',
   verifiTokenMiddleware,
-  validateSchemaMiddleware(schemas.secureNote),
-  createSecureNote,
+  validateSchemaMiddleware(schemas.card),
+  createCard,
 );
-secureNoteRouter.get('/', verifiTokenMiddleware, getAllUsersSecureNotes);
-secureNoteRouter.get('/:id', verifiTokenMiddleware, getSecureNoteById);
-secureNoteRouter.delete('/:id', verifiTokenMiddleware, deleteSecureNote);
+cardRouter.get('/', verifiTokenMiddleware, getAllUsersCards);
+cardRouter.get('/:id', verifiTokenMiddleware, getCardById);
+cardRouter.delete('/:id', verifiTokenMiddleware, deleteCard);
 
-export default secureNoteRouter;
+export default cardRouter;
