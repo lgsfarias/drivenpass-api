@@ -16,6 +16,7 @@ model User {
   password    String
   createdAt   DateTime     @default(now()) @db.Timestamptz()
   credentials Credential[]
+  secureNotes SecureNote[]
 
   @@map("users")
 }
@@ -32,4 +33,16 @@ model Credential {
 
   @@unique([userId, label])
   @@map("credentials")
+}
+
+model SecureNote {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @map("user_id")
+  label     String   @db.VarChar(50)
+  content   String   @db.VarChar(1000)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@unique([userId, label])
+  @@map("secure_notes")
 }
