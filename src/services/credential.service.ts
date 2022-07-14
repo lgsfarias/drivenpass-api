@@ -15,6 +15,9 @@ export const findAllByUserId = async (userId: number) => {
 
 export const findById = async (id: number) => {
   const credential = await credentialRepository.findById(id);
+  if (!credential) {
+    throw new AppError('Credential not found', 404);
+  }
   return credential;
 };
 

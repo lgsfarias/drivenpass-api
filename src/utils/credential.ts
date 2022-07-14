@@ -1,3 +1,4 @@
+import { Credential } from '@prisma/client';
 import AppError from '../utils/AppError.js';
 import Cryptr from 'cryptr';
 
@@ -16,5 +17,14 @@ export const decryptPassword = (password: string): string => {
     return cryptr.decrypt(password);
   } catch (error) {
     throw new AppError('Error decrypting password', 500);
+  }
+};
+
+export const verifyIfCredentialIsForUser = (
+  credential: Credential,
+  userId: number,
+) => {
+  if (credential.userId !== userId) {
+    throw new AppError('Credential not found', 404);
   }
 };
