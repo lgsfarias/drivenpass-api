@@ -20,6 +20,14 @@ export const getAllUsersSecureNotes = async (req: Request, res: Response) => {
   res.status(200).json(secureNotes);
 };
 
+export const getSecureNoteById = async (req: Request, res: Response) => {
+  const { user } = res.locals;
+  const id = +req.params.id;
+  const secureNote = await secureNoteService.findById(id);
+  verifyIfSecureNoteIsForUser(secureNote, user.id);
+  res.status(200).json(secureNote);
+};
+
 export const deleteSecureNote = async (req: Request, res: Response) => {
   const { user } = res.locals;
   const id = +req.params.id;
