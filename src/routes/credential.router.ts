@@ -3,6 +3,7 @@ import {
   createCredential,
   getAllUserCredentials,
   getCredentialById,
+  deleteCredential,
 } from '../controllers/credential.controller.js';
 import validateSchemaMiddleware from '../middlewares/validateSchemaMiddleware.js';
 import verifiTokenMiddleware from '../middlewares/verifyTokenMiddleware.js';
@@ -18,5 +19,6 @@ credentialRouter.post(
 );
 credentialRouter.get('/', verifiTokenMiddleware, getAllUserCredentials);
 credentialRouter.get('/:id', verifiTokenMiddleware, getCredentialById);
+credentialRouter.delete('/:id', verifiTokenMiddleware, deleteCredential);
 
 export default credentialRouter;

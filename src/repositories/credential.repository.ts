@@ -37,3 +37,12 @@ export const findById = async (id: number) => {
   });
   return credential;
 };
+
+export const deleteCredential = async (id: number) => {
+  const credential = await prisma.credential.delete({
+    where: {
+      id,
+    },
+  });
+  return credential;
+};

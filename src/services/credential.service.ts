@@ -33,3 +33,8 @@ export const verifyIfLabelAlreadyExists = async (
     throw new AppError('Credential already exists', 400);
   }
 };
+
+export const deleteCredential = async (id: number) => {
+  const credential = await credentialRepository.deleteCredential(id);
+  return credential;
+};

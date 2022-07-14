@@ -38,3 +38,12 @@ export const getCredentialById = async (req: Request, res: Response) => {
     password: credentialUtils.decryptPassword(credential.password),
   });
 };
+
+export const deleteCredential = async (req: Request, res: Response) => {
+  const { user } = res.locals;
+  const id = +req.params.id;
+  const credential = await credentialService.findById(id);
+  credentialUtils.verifyIfCredentialIsForUser(credential, user.id);
+  await credentialService.deleteCredential(id);
+  res.status(204).send();
+};
