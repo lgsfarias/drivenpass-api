@@ -17,6 +17,7 @@ model User {
   createdAt   DateTime     @default(now()) @db.Timestamptz()
   credentials Credential[]
   secureNotes SecureNote[]
+  cards       Card[]
 
   @@map("users")
 }
@@ -45,4 +46,22 @@ model SecureNote {
 
   @@unique([userId, label])
   @@map("secure_notes")
+}
+
+model Card {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int      @map("user_id")
+  label        String
+  number       String
+  name         String
+  securityCode String   @map("security_code")
+  expiryDate   String   @map("expiry_date")
+  password     String
+  isVirtual    Boolean  @map("is_virtual")
+  type         String
+  createdAt    DateTime @default(now()) @db.Timestamptz()
+
+  @@unique([userId, label])
+  @@map("cards")
 }
