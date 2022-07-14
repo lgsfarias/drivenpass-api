@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as cardService from '../services/card.service.js';
 import { verifyIfCardIsForUser } from '../utils/card.js';
-import { encryptPassword } from '../utils/credential.js';
+import { encryptPassword, decryptPassword } from '../utils/credential.js';
 
 export const createCard = async (req: Request, res: Response) => {
   const { user } = res.locals;
@@ -38,8 +38,8 @@ export const getAllUsersCards = async (req: Request, res: Response) => {
   res.status(200).json(
     cards.map((card) => ({
       ...card,
-      securityCode: encryptPassword(card.securityCode),
-      password: encryptPassword(card.password),
+      securityCode: decryptPassword(card.securityCode),
+      password: decryptPassword(card.password),
     })),
   );
 };
@@ -51,8 +51,8 @@ export const getCardById = async (req: Request, res: Response) => {
   verifyIfCardIsForUser(card, user.id);
   res.status(200).json({
     ...card,
-    securityCode: encryptPassword(card.securityCode),
-    password: encryptPassword(card.password),
+    securityCode: decryptPassword(card.securityCode),
+    password: decryptPassword(card.password),
   });
 };
 
