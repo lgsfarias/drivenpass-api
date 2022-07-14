@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { createCredential } from '../controllers/credential.controller.js';
+import {
+  createCredential,
+  getAllUserCredentials,
+} from '../controllers/credential.controller.js';
 import validateSchemaMiddleware from '../middlewares/validateSchemaMiddleware.js';
 import verifiTokenMiddleware from '../middlewares/verifyTokenMiddleware.js';
 import * as schemas from '../schemas/index.js';
@@ -12,5 +15,7 @@ credentialRouter.post(
   validateSchemaMiddleware(schemas.credential),
   createCredential,
 );
+
+credentialRouter.get('/', verifiTokenMiddleware, getAllUserCredentials);
 
 export default credentialRouter;

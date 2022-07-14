@@ -19,3 +19,21 @@ export const findByLabelAndUserId = async (label: string, userId: number) => {
   });
   return credential;
 };
+
+export const findAllByUserId = async (userId: number) => {
+  const credentials = await prisma.credential.findMany({
+    where: {
+      userId,
+    },
+  });
+  return credentials;
+};
+
+export const findById = async (id: number) => {
+  const credential = await prisma.credential.findUnique({
+    where: {
+      id,
+    },
+  });
+  return credential;
+};
