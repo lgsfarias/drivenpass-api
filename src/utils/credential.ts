@@ -1,11 +1,20 @@
-import Crypter from 'cryptr';
+import AppError from '../utils/AppError.js';
+import Cryptr from 'cryptr';
 
-const cryptr = new Crypter(process.env.CRYPTR_SECRET);
+const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
 
-const encryptPassword = (password: string): string => {
-  return cryptr.encrypt(password);
+export const encryptPassword = (password: string): string => {
+  try {
+    return cryptr.encrypt(password);
+  } catch (error) {
+    throw new AppError('Error encrypting password', 500);
+  }
 };
 
-const decryptPassword = (password: string): string => {
-  return cryptr.decrypt(password);
+export const decryptPassword = (password: string): string => {
+  try {
+    return cryptr.decrypt(password);
+  } catch (error) {
+    throw new AppError('Error decrypting password', 500);
+  }
 };
