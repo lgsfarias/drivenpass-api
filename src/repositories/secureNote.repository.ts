@@ -37,3 +37,12 @@ export const findById = async (id: number) => {
   });
   return secureNote;
 };
+
+export const deleteSecureNote = async (id: number) => {
+  const secureNote = await prisma.secureNote.delete({
+    where: {
+      id,
+    },
+  });
+  return secureNote;
+};

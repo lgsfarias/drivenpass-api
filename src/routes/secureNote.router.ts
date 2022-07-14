@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import {
-  create,
+  createSecureNote,
   getAllUsersSecureNotes,
+  deleteSecureNote,
 } from '../controllers/secureNote.controller.js';
 import validateSchemaMiddleware from '../middlewares/validateSchemaMiddleware.js';
 import verifiTokenMiddleware from '../middlewares/verifyTokenMiddleware.js';
@@ -13,8 +14,9 @@ secureNoteRouter.post(
   '/',
   verifiTokenMiddleware,
   validateSchemaMiddleware(schemas.secureNote),
-  create,
+  createSecureNote,
 );
 secureNoteRouter.get('/', verifiTokenMiddleware, getAllUsersSecureNotes);
+secureNoteRouter.delete('/:id', verifiTokenMiddleware, deleteSecureNote);
 
 export default secureNoteRouter;

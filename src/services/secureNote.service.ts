@@ -33,3 +33,8 @@ export const verifyIfLabelAlreadyExists = async (
     throw new AppError('Label already exists', 400);
   }
 };
+
+export const deleteSecureNote = async (id: number) => {
+  const secureNote = await secureNoteRepository.deleteSecureNote(id);
+  return secureNote;
+};
