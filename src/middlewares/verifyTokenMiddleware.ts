@@ -27,9 +27,17 @@ const verifiTokenMiddleware = async (
     throw new AppError('Invalid authorization header', 401);
   }
 
-  const { userId } = <UserIdJwtPayload>(
-    jwt.verify(token, process.env.JWT_SECRET)
-  );
+  let userId: number;
+  try {
+    let decoded = <UserIdJwtPayload>jwt.verify(token, process.env.JWT_SECRET);
+    userId = decoded.userId;
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      throw new AppError('Token expired', 401);
+    }
+    throw new AppError('Invalid token', 401);
+  }
+
   const user = await userService.getUserById(userId);
   if (!user) {
     throw new AppError('Invalid token', 401);

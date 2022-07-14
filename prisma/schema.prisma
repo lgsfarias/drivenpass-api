@@ -30,5 +30,6 @@ model Credential {
   password  String
   createdAt DateTime @default(now()) @db.Timestamptz()
 
+  @@unique([userId, label])
   @@map("credentials")
 }
