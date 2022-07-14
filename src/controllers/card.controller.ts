@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as cardService from '../services/card.service.js';
 import { verifyIfCardIsForUser } from '../utils/card.js';
+import { encryptPassword } from '../utils/credential.js';
 
 export const createCard = async (req: Request, res: Response) => {
   const { user } = res.locals;
@@ -15,24 +16,32 @@ export const createCard = async (req: Request, res: Response) => {
     type,
   } = req.body;
   await cardService.verifyIfLabelAlreadyExists(label, user.id);
+  const encryptedSecurityCode = encryptPassword(securityCode);
+  const encryptedPassword = encryptPassword(password);
   const card = await cardService.create({
     userId: user.id,
     label,
     number,
     name,
-    securityCode,
+    securityCode: encryptedSecurityCode,
     expiryDate,
-    password,
+    password: encryptedPassword,
     isVirtual,
     type,
   });
-  res.status(201).json(card);
+  res.status(201).json({ ...card, securityCode, password });
 };
 
 export const getAllUsersCards = async (req: Request, res: Response) => {
   const { user } = res.locals;
   const cards = await cardService.findAllByUserId(user.id);
-  res.status(200).json(cards);
+  res.status(200).json(
+    cards.map((card) => ({
+      ...card,
+      securityCode: encryptPassword(card.securityCode),
+      password: encryptPassword(card.password),
+    })),
+  );
 };
 
 export const getCardById = async (req: Request, res: Response) => {
@@ -40,7 +49,11 @@ export const getCardById = async (req: Request, res: Response) => {
   const id = +req.params.id;
   const card = await cardService.findById(id);
   verifyIfCardIsForUser(card, user.id);
-  res.status(200).json(card);
+  res.status(200).json({
+    ...card,
+    securityCode: encryptPassword(card.securityCode),
+    password: encryptPassword(card.password),
+  });
 };
 
 export const deleteCard = async (req: Request, res: Response) => {
