@@ -1,18 +1,7 @@
-import pg from 'pg';
+import pkg from '@prisma/client'; // precisamos instalar esse pacote!
 
-const { Pool } = pg;
+const { PrismaClient } = pkg;
 
-const databaseConfig = {
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-};
+const prisma = new PrismaClient();
 
-if (process.env.MODE === 'dev') {
-  delete databaseConfig.ssl;
-}
-
-const db = new Pool(databaseConfig);
-
-export default db;
+export default prisma;
