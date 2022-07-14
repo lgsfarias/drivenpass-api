@@ -14,7 +14,7 @@ export const findAllByUserId = async (userId: number) => {
 export const findById = async (id: number) => {
   const card = await cardRepository.findById(id);
   if (!card) {
-    throw new AppError('Secure note not found', 404);
+    throw new AppError('Card not found', 404);
   }
   return card;
 };

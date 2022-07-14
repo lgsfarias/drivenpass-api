@@ -3,6 +3,6 @@ import AppError from './AppError.js';
 
 export const verifyIfCardIsForUser = (card: Card, userId: number) => {
   if (card.userId !== userId) {
-    throw new AppError('Secure note not found', 404);
+    throw new AppError('Card not found', 404);
   }
 };
