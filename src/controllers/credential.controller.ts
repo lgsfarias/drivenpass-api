@@ -3,11 +3,12 @@ import * as credentialService from '../services/credential.service.js';
 import * as credentialUtils from '../utils/credential.js';
 
 export const createCredential = async (req: Request, res: Response) => {
-  const { userId, label, url, username, password } = req.body;
-  await credentialService.verifyIfLabelAlreadyExists(label, userId);
+  const { user } = res.locals;
+  const { label, url, username, password } = req.body;
+  await credentialService.verifyIfLabelAlreadyExists(label, user.id);
   const encryptedPassword = credentialUtils.encryptPassword(password);
   const credential = await credentialService.create({
-    userId,
+    userId: user.id,
     label,
     url,
     username,
