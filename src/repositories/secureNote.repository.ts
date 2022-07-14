@@ -19,3 +19,21 @@ export const findByLabelAndUserId = async (label: string, userId: number) => {
   });
   return secureNote;
 };
+
+export const findAllByUserId = async (userId: number) => {
+  const secureNotes = await prisma.secureNote.findMany({
+    where: {
+      userId,
+    },
+  });
+  return secureNotes;
+};
+
+export const findById = async (id: number) => {
+  const secureNote = await prisma.secureNote.findUnique({
+    where: {
+      id,
+    },
+  });
+  return secureNote;
+};

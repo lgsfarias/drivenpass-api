@@ -12,3 +12,9 @@ export const create = async (req: Request, res: Response) => {
   });
   res.status(201).json(secureNote);
 };
+
+export const getAllUsersSecureNotes = async (req: Request, res: Response) => {
+  const { user } = res.locals;
+  const secureNotes = await secureNoteService.findAllByUserId(user.id);
+  res.status(200).json(secureNotes);
+};

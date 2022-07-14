@@ -8,6 +8,19 @@ export const create = async (
   return secureNote;
 };
 
+export const findAllByUserId = async (userId: number) => {
+  const secureNotes = await secureNoteRepository.findAllByUserId(userId);
+  return secureNotes;
+};
+
+export const findById = async (id: number) => {
+  const secureNote = await secureNoteRepository.findById(id);
+  if (!secureNote) {
+    throw new AppError('Secure note not found', 404);
+  }
+  return secureNote;
+};
+
 export const verifyIfLabelAlreadyExists = async (
   label: string,
   userId: number,
