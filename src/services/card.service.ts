@@ -29,7 +29,7 @@ export const verifyIfLabelAlreadyExists = async (
   }
 };
 
-export const deletecard = async (id: number) => {
+export const deleteCard = async (id: number) => {
   const card = await cardRepository.deletecard(id);
   return card;
 };
