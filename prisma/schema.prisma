@@ -76,6 +76,5 @@ model Wifi {
   password  String   @db.VarChar(50)
   createdAt DateTime @default(now()) @db.Timestamptz()
 
-  @@unique([userId, label])
   @@map("wifis")
 }
