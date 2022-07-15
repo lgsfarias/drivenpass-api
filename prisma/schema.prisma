@@ -19,6 +19,7 @@ model User {
   secureNotes SecureNote[]
   cards       Card[]
   wifis       Wifi[]
+  documents   Document[]
 
   @@map("users")
 }
@@ -77,6 +78,27 @@ model Wifi {
   createdAt DateTime @default(now()) @db.Timestamptz()
 
   @@map("wifis")
+}
+
+model Document {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int          @map("user_id")
+  type           DocumentType
+  number         String       @db.VarChar(50)
+  name           String       @db.VarChar(50)
+  issueDate      String
+  expirationDate String
+  issuer         String       @db.VarChar(50)
+  createdAt      DateTime     @default(now()) @db.Timestamptz()
+
+  @@unique([userId, type])
+  @@map("documents")
+}
+
+enum DocumentType {
+  RG
+  CHN
 }
 
 enum CardType {
