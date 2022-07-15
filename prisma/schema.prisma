@@ -18,6 +18,7 @@ model User {
   credentials Credential[]
   secureNotes SecureNote[]
   cards       Card[]
+  wifis       Wifi[]
 
   @@map("users")
 }
@@ -64,4 +65,17 @@ model Card {
 
   @@unique([userId, label])
   @@map("cards")
+}
+
+model Wifi {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @map("user_id")
+  label     String   @db.VarChar(50)
+  ssid      String   @db.VarChar(50)
+  password  String   @db.VarChar(50)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@unique([userId, label])
+  @@map("wifis")
 }
