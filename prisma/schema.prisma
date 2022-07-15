@@ -60,7 +60,7 @@ model Card {
   expiryDate   String   @map("expiry_date")
   password     String
   isVirtual    Boolean  @map("is_virtual")
-  type         String
+  type         CardType @default(credit)
   createdAt    DateTime @default(now()) @db.Timestamptz()
 
   @@unique([userId, label])
@@ -77,4 +77,10 @@ model Wifi {
   createdAt DateTime @default(now()) @db.Timestamptz()
 
   @@map("wifis")
+}
+
+enum CardType {
+  credit
+  debit
+  both
 }

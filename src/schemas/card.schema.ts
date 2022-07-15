@@ -9,7 +9,7 @@ const cardSchema = Joi.object<Omit<CreateCardData, 'userId'>>({
   expiryDate: Joi.string().required(),
   password: Joi.string().required(),
   isVirtual: Joi.boolean().required(),
-  type: Joi.string().required(),
+  type: Joi.string().valid('credit', 'debit', 'both').required(),
 }).required();
 
 export default cardSchema;
