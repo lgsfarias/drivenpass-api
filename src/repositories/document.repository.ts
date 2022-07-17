@@ -33,7 +33,7 @@ export const findAllByUserId = async (userId: number) => {
 };
 
 export const findById = async (id: number) => {
-  const document = await prisma.document.findUnique({
+  const document = await prisma.document.findFirst({
     where: {
       id,
     },
