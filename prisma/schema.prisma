@@ -72,9 +72,9 @@ model Wifi {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int      @map("user_id")
-  label     String   @db.VarChar(50)
-  ssid      String   @db.VarChar(50)
-  password  String   @db.VarChar(50)
+  label     String
+  ssid      String
+  password  String
   createdAt DateTime @default(now()) @db.Timestamptz()
 
   @@map("wifis")
@@ -85,11 +85,11 @@ model Document {
   user           User         @relation(fields: [userId], references: [id])
   userId         Int          @map("user_id")
   type           DocumentType
-  number         String       @db.VarChar(50)
-  name           String       @db.VarChar(50)
+  number         String
+  name           String
   issueDate      String
   expirationDate String
-  issuer         String       @db.VarChar(50)
+  issuer         String
   createdAt      DateTime     @default(now()) @db.Timestamptz()
 
   @@unique([userId, type])
