@@ -10,7 +10,7 @@ export const create = async (createDocumentData: CreateDocumentData) => {
   return document;
 };
 
-export const findByLabelAndUserId = async (
+export const findByTypeAndUserId = async (
   type: DocumentType,
   userId: number,
 ) => {
