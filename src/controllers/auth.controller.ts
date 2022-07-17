@@ -16,3 +16,14 @@ export const signin = async (req: Request, res: Response) => {
   const token = generateToken(user.id);
   res.send({ token });
 };
+
+export const checkAuth = async (req: Request, res: Response) => {
+  const { user } = res.locals;
+  res.json({
+    message: 'You are authenticated',
+    user: {
+      id: user.id,
+      email: user.email,
+    },
+  });
+};

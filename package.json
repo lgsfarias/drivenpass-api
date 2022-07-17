@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "npx nodemon index.ts"
+    "dev": "npx nodemon index.ts",
+    "heroku-postbuild": "npx prisma migrate dev && build:production"
   },
   "keywords": [],
   "author": "",
